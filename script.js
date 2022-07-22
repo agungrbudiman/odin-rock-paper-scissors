@@ -35,16 +35,18 @@ function game() {
         const playerSelection = prompt('Enter your choice')
         const computerSelection = getComputerChoice();
         let result = playRound(playerSelection, computerSelection);
-        result == 'win' ? playerScore++ : null;
-        result == 'lose' ? computerScore++ : null;
-        if (result == 'win') {
-            console.log(`Round-${i+1} | You Win!, ${playerSelection} beats ${computerSelection}`);
-        }
-        else if (result == 'lose') {
-            console.log(`Round-${i+1} | You Lose!, ${computerSelection} beats ${playerSelection}`);
-        }
-        else {
-            console.log(`Round-${i+1} | Draw!, ${playerSelection} vs ${computerSelection}`);
+        switch (result) {
+            case 'win':
+                playerScore++;
+                console.log(`Round-${i+1} | You Win!, ${playerSelection} beats ${computerSelection}`);
+                break;
+            case 'lose':
+                computerScore++;
+                console.log(`Round-${i+1} | You Lose!, ${computerSelection} beats ${playerSelection}`);
+                break;
+            case 'draw':
+                console.log(`Round-${i+1} | Draw!, ${playerSelection} vs ${computerSelection}`);
+                break;
         }
     }
     if (playerScore == computerScore) {
