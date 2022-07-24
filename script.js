@@ -59,5 +59,3 @@ function game() {
         console.log('Result: Computer is the winner!');
     }
 }
-
-game();
