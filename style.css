@@ -42,6 +42,10 @@ body {
     border-radius: 8px;
 }
 
+.player .box {
+    cursor: pointer;
+}
+
 .selected {
     background-color: aqua;
     transition: background-color 0.5s;

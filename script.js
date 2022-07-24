@@ -50,14 +50,6 @@ function play(e) {
         computerScore ++;
         computerScoreBox.textContent = computerScore;
     }
-    if (playerScore == 5) {
-        alert("You are the Winner, Congratulations!!!");
-        reset();
-    }
-    else if (computerScore == 5) {
-        alert("You lose, better luck next time!!!");
-        reset();
-    }
 }
 
 const playerBoxes = document.querySelectorAll(".player .box");
@@ -67,4 +59,12 @@ playerBoxes.forEach(box => {
 
 document.addEventListener('transitionend', (e) => {
     e.target.classList.remove('selected');
+    if (playerScore == 5) {
+        alert("You are the Winner, Congratulations!!!");
+        reset();
+    }
+    else if (computerScore == 5) {
+        alert("You lose, better luck next time!!!");
+        reset();
+    }
 })
