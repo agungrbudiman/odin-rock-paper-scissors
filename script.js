@@ -1,7 +1,3 @@
-function capFirst(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 function getComputerChoice() {
     generatedNum = Math.floor(Math.random() * 3);
     switch(generatedNum) {
@@ -12,7 +8,6 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
     if (playerSelection == computerSelection) {
         return 'draw';
     }
@@ -28,34 +23,48 @@ function playRound(playerSelection, computerSelection) {
     return 'lose';
 }
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('Enter your choice')
-        const computerSelection = getComputerChoice();
-        let result = playRound(playerSelection, computerSelection);
-        switch (result) {
-            case 'win':
-                playerScore++;
-                console.log(`Round-${i+1} | You Win!, ${playerSelection} beats ${computerSelection}`);
-                break;
-            case 'lose':
-                computerScore++;
-                console.log(`Round-${i+1} | You Lose!, ${computerSelection} beats ${playerSelection}`);
-                break;
-            case 'draw':
-                console.log(`Round-${i+1} | Draw!, ${playerSelection} vs ${computerSelection}`);
-                break;
-        }
+let playerScore = 0;
+let computerScore = 0;
+const playerScoreBox = document.querySelector(".player .score");
+const computerScoreBox = document.querySelector(".computer .score");
+
+function reset() {
+    playerScore = 0;
+    computerScore = 0;
+    playerScoreBox.textContent = '0';
+    computerScoreBox.textContent = '0';
+}
+
+function play(e) {
+    e.target.classList.add('selected');
+    const playerSelection = e.target.getAttribute('value');
+    const computerSelection = getComputerChoice();
+    const computerBox = document.querySelector(`.computer .box[value="${computerSelection}"]`);
+    computerBox.classList.add('selected');
+    const status = playRound(playerSelection, computerSelection);
+    if (status == 'win') {
+        playerScore ++;
+        playerScoreBox.textContent = playerScore;
     }
-    if (playerScore == computerScore) {
-        console.log('Result: Draw!');
+    else if (status == 'lose') {
+        computerScore ++;
+        computerScoreBox.textContent = computerScore;
     }
-    else if (playerScore > computerScore) {
-        console.log('Result: You are the winner!');
+    if (playerScore == 5) {
+        alert("You are the Winner, Congratulations!!!");
+        reset();
     }
-    else {
-        console.log('Result: Computer is the winner!');
+    else if (computerScore == 5) {
+        alert("You lose, better luck next time!!!");
+        reset();
     }
 }
+
+const playerBoxes = document.querySelectorAll(".player .box");
+playerBoxes.forEach(box => {
+    box.addEventListener('click', play);
+});
+
+document.addEventListener('transitionend', (e) => {
+    e.target.classList.remove('selected');
+})
